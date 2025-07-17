@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python27
-api_version: 1
-threadsafe: true
+runtime: python311
+service: default
 
 handlers:
-
+# Redirect root to main application
 - url: /
-  script: main.app
+  script: auto
 
+# Redirect /ai/beat-blender/view to main application
 - url: /ai/beat-blender/view
-  script: main.app
+  script: auto
 
+# Serve static HTML files
 - url: /ai/beat-blender/view/
   static_files: index.html
   upload: index.html
@@ -32,11 +33,11 @@ handlers:
   static_files: index.html
   upload: index.html
 
-- url: /ai/beat-blenader/view/share
+- url: /ai/beat-blender/view/share
   static_files: index.html
   upload: index.html
 
-- url: /ai/beat-blenader/view/share/
+- url: /ai/beat-blender/view/share/
   static_files: index.html
   upload: index.html
 
@@ -48,15 +49,20 @@ handlers:
   static_files: index.html
   upload: index.html
 
-- url: /ai/beat-bleander/view/main
+- url: /ai/beat-blender/view/main
   static_files: index.html
   upload: index.html
 
+# Serve static assets
 - url: /ai/beat-blender/view/assets
   static_dir: assets
 
 - url: /ai/beat-blender/view/third_party
   static_dir: third_party
+
+# Catch-all for dynamic routes
+- url: /ai/beat-blender/view/.*
+  script: auto
 
 skip_files:
 - ^.git/.*
